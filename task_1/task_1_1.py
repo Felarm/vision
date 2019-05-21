@@ -61,6 +61,8 @@ def compare_lists(l1, l2):
                 return compare_lists(l1[i], l2[i])
             if type(l1[i]) is dict and type(l2[i]) is dict:
                 return compare_dicts(l1[i], l2[i])
+            if type(l1[i]) is float and type(l2[i]) is float:
+                return compare_floats(l1[i], l2[i])
             return l1[i] == l2[i]
         i += 1
 
