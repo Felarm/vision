@@ -1,4 +1,4 @@
-from urllib import request
+from urllib import request, error
 import os
 import imghdr
 import argparse
@@ -24,9 +24,12 @@ def upload_image(dir_path, url):
                     encoded_img = base64.b64encode(img)  # кодирует изображения в base64
                 req = request.Request(url=url, data=encoded_img, method='POST')
                 req.add_header('Content-Type', 'image/{}'.format(img_type))
-                resp = request.urlopen(req)
-                print(resp.status)
-                print('uploaded file:', file.name)  # если есть параметр
+                try:
+                    resp = request.urlopen(req)
+                    if resp.status == 200:
+                        print('uploaded file:', file.name)
+                except error.URLError as err:
+                    print(err.reason)
         return 'all images uploaded'
     else:
         print("not a dir or dir doesn't exists")
